@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yq.springcloud</groupId>
+  <artifactId>euerka</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+   <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-netflix</artifactId>
+                <version>1.0.7.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        
+        
+
+        <!--表示为web工程-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--暴露各种指标-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+    </dependencies>
+    
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<!-- 指定jdk编译插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			
+			<!-- 指定打包插件 ，需指定主类-->
+			<plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-jar-plugin</artifactId>  
+            <version>2.3.2</version>  
+            <configuration>  
+                <archive>  
+                    <manifest>  
+                        <!--change addClasspath to true if daks is desktop version-->  
+                        <addClasspath>true</addClasspath>  
+                        <classpathPrefix>lib/</classpathPrefix>  
+                        <mainClass>com.yq.springcloud.euerka.Application</mainClass>  
+                        <addDefaultImplementationEntries>true</addDefaultImplementationEntries>  
+                        <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>  
+                    </manifest>  
+                    <manifestEntries>  
+                        <Permissions>${Permissions}</Permissions>  
+                        <Caller-Allowable-Codebase>${Caller-Allowable-Codebase}</Caller-Allowable-Codebase>  
+                    </manifestEntries>  
+                </archive>  
+            </configuration>  
+        </plugin>  
+        <plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-dependency-plugin</artifactId>  
+            <version>2.3</version>  
+            <executions>  
+                <execution>  
+                    <id>copy-dependencies</id>  
+                    <phase>package</phase>  
+                    <configuration>  
+                        <overWriteReleases>false</overWriteReleases>  
+                        <overWriteSnapshots>false</overWriteSnapshots>  
+                        <overWriteIfNewer>true</overWriteIfNewer>  
+                        <outputDirectory>  
+                          ${project.build.directory}/lib
+                        </outputDirectory>  
+                    </configuration>  
+                    <goals>  
+                        <goal>copy-dependencies</goal>  
+                    </goals>  
+                </execution>  
+            </executions>  
+        </plugin>
+			
+		</plugins>
+	</build>
+    
+    
+    
+    
+</project>
+  
+  
+  
+  
+  
